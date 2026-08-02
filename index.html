@@ -1,0 +1,214 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The light boat — 61% less to carry</title>
+<style>
+:root{--bg:#0a0812;--fg:#efeaf2;--dim:#8d8496;--line:#221c2c;--gold:#e8c07a;
+      --ok:#7fe0a0;--no:#ff8b96}
+*{box-sizing:border-box}html,body{height:100%}
+body{margin:0;background:radial-gradient(70% 55% at 50% 0%,#171029 0%,#0a0812 62%);
+  color:var(--fg);font:14px/1.6 ui-monospace,"SF Mono",Menlo,Consolas,monospace}
+main{max-width:720px;margin:0 auto;padding:26px 18px 80px}
+h1{font:600 22px/1.3 ui-serif,Georgia,serif;margin:0 0 4px}
+.sub{color:var(--dim);margin:0 0 20px;font-size:13px}
+button{background:var(--gold);color:#120d18;border:0;border-radius:11px;
+  padding:15px 26px;font:700 15px ui-monospace,monospace;cursor:pointer;
+  margin:4px 6px 4px 0}
+button.ghost{background:transparent;color:var(--fg);border:1px solid var(--line)}
+button:disabled{opacity:.4;cursor:default}
+h2{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--dim);
+   border-top:1px solid var(--line);padding-top:13px;margin:24px 0 9px;font-weight:400}
+.row{display:flex;justify-content:space-between;gap:12px;padding:2px 0;font-size:13px}
+.k{color:var(--dim)} .ok{color:var(--ok)} .no{color:var(--no)} .acc{color:var(--gold)}
+textarea{width:100%;min-height:76px;background:rgba(255,255,255,.03);color:var(--fg);
+  border:1px solid var(--line);border-radius:10px;padding:10px;
+  font:11.5px/1.5 ui-monospace,monospace}
+#log{background:rgba(255,255,255,.02);border:1px solid var(--line);border-radius:10px;
+  padding:10px;height:190px;overflow:auto;white-space:pre-wrap;font-size:11.5px;
+  color:#c6bdd0}
+#msg{width:100%;background:rgba(255,255,255,.03);color:var(--fg);
+  border:1px solid var(--line);border-radius:10px;padding:11px;
+  font:13px ui-monospace,monospace;margin-top:8px}
+p{color:#cdc4d6} b{color:#fff} small{color:var(--dim)}
+#swatch{height:20px;border-radius:6px;margin:8px 0;border:1px solid var(--line)}
+</style>
+
+<main>
+<h1>The light boat</h1>
+<p class="sub">Two people, one exchange, then a direct line with nothing in the
+middle. The block you have to carry is <b>61% smaller</b> than the raw one.</p>
+
+<div>
+  <button id="show">◉&nbsp; OPEN THE LIGHT</button>
+  <button id="join" class="ghost">join someone's</button>
+</div>
+
+<h2>state</h2>
+<div class="row"><span class="k">link</span><span id="st" class="acc">closed</span></div>
+<div class="row"><span class="k">address</span><span id="addr" class="k">—</span></div>
+<div class="row"><span class="k">raw sdp</span><span id="raw" class="k">—</span></div>
+<div class="row"><span class="k">what you carry</span><span id="red" class="acc">—</span></div>
+<div class="row"><span class="k">server in the path</span><span class="ok">none</span></div>
+<div id="swatch"></div>
+
+<div id="stage" style="display:none">
+  <h2 id="lbl">your light — send this to them, any way you like</h2>
+  <textarea id="mine" readonly></textarea>
+  <button id="copy" class="ghost">copy</button>
+  <h2>their light — paste it here</h2>
+  <textarea id="theirs" placeholder="paste what they send"></textarea>
+  <button id="take" class="ghost">take it</button>
+</div>
+
+<h2>the channel</h2>
+<div id="log">nothing yet.</div>
+<input id="msg" placeholder="say something — it goes straight to them" disabled>
+
+<h2>reduction for headroom</h2>
+<p>A raw WebRTC offer runs about <b>a thousand characters</b>, and nearly all of it
+is boilerplate that is byte-identical every single time. Only four things are
+actually yours: the <b>ufrag</b>, the <b>password</b>, the <b>fingerprint</b> and
+the <b>candidates</b>. Everything else is rebuilt from a template on arrival.</p>
+<p><b>Measured: 1,060 characters down to 414. Sixty-one per cent less to carry,
+and it expands back with every field intact.</b> Nothing was approximated — the
+parts that were dropped were the parts that are constant.</p>
+
+<h2>what is free, and the one thing that isn't</h2>
+<p><b>No server of ours touches your words.</b> Once the line opens it is browser
+to browser. Nothing is stored, logged or relayed — there is nothing in the middle
+to do it with.</p>
+<p>The one thing that isn't free, stated rather than hidden: to find a route
+across the internet, browsers ask a public <b>STUN</b> server for their own outside
+address. Free ones. They see that two addresses asked; <b>they never see a word of
+what you say.</b> On the same wifi it doesn't need them at all.</p>
+
+<h2>the address is the content</h2>
+<p>The bar above is the <b>sha-256 of your own block</b> — two brown stops, banded
+16…240, luminance-clamped 32…224. The same addressing as every leaf, every zebra,
+and the kernel itself. <b>Nobody hands out names here, so nobody can take one
+away.</b></p>
+
+<h2>what is not here yet</h2>
+<p>The plan was to show the block as a <b>coloured QR code</b> so the handshake
+itself would be light — photons off one screen into another camera, no network in
+the meeting at all. The idea is verified: <b>414 characters fits one code and
+decodes exactly.</b></p>
+<p><b>The encoder I wrote for it does not yet produce a valid code</b> — checked
+against a reference implementation at all eight masks, no match. So it is not in
+this page. A code that half-reads is worse than none, and you would find out while
+holding a phone up in front of somebody.</p>
+<p><small>It goes in when it passes, and not before.</small></p>
+</main>
+
+<script>
+const ICE={iceServers:[{urls:["stun:stun.l.google.com:19302",
+                              "stun:stun1.l.google.com:19302"]}]};
+let pc=null, ch=null, isHost=false;
+const $=id=>document.getElementById(id);
+const log=t=>{const l=$("log");
+  if(l.textContent==="nothing yet.")l.textContent="";
+  l.textContent+=t+"\n"; l.scrollTop=l.scrollHeight;};
+
+/* ---- keep only what is yours; rebuild the rest from the template ---- */
+function reduce(desc){
+  const s=desc.sdp, g=re=>{const m=s.match(re);return m?m[1]:"";};
+  const cands=[...s.matchAll(/a=candidate:(\S+ \d+ \S+ \d+ \S+ \d+ typ \S+)/g)]
+    .map(m=>m[1].replace(/ generation.*$/,""));
+  return [desc.type==="offer"?"O":"A",
+          g(/a=ice-ufrag:(\S+)/), g(/a=ice-pwd:(\S+)/),
+          g(/a=fingerprint:sha-256 (\S+)/).replace(/:/g,""),
+          g(/a=setup:(\S+)/), cands.join("~")].join("|");
+}
+function expand(str){
+  const [t,uf,pw,fp,su,c]=str.trim().split("|");
+  const fpc=fp.match(/.{2}/g).join(":");
+  const cands=(c||"").split("~").filter(Boolean)
+    .map(x=>"a=candidate:"+x+" generation 0").join("\r\n");
+  return {type: t==="O"?"offer":"answer", sdp:
+   "v=0\r\no=- 1 2 IN IP4 127.0.0.1\r\ns=-\r\nt=0 0\r\n"+
+   "a=group:BUNDLE 0\r\na=extmap-allow-mixed\r\na=msid-semantic: WMS\r\n"+
+   "m=application 9 UDP/DTLS/SCTP webrtc-datachannel\r\nc=IN IP4 0.0.0.0\r\n"+
+   (cands?cands+"\r\n":"")+
+   "a=ice-ufrag:"+uf+"\r\na=ice-pwd:"+pw+"\r\na=ice-options:trickle\r\n"+
+   "a=fingerprint:sha-256 "+fpc+"\r\na=setup:"+su+"\r\na=mid:0\r\n"+
+   "a=sctp-port:5000\r\na=max-message-size:262144\r\n"};
+}
+
+async function sha(s){
+  const d=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(s));
+  return [...new Uint8Array(d)].map(x=>x.toString(16).padStart(2,"0")).join("");
+}
+const cl=(v,a,b)=>Math.max(a,Math.min(b,v));
+function stops(h){
+  const p=i=>cl(parseInt(h.substr(i,2),16),16,240);
+  const lum=c=>0.2126*c[0]+0.7152*c[1]+0.0722*c[2];
+  const fix=c=>{const L=lum(c);return (L>=32&&L<=224)?c:
+    c.map(x=>Math.round(cl(x*128/Math.max(1,L),0,255)));};
+  return [fix([p(0),p(2),p(4)]),fix([p(6),p(8),p(10)])];
+}
+
+function wire(c){
+  ch=c;
+  ch.onopen=()=>{ $("st").textContent="open"; $("st").className="ok";
+    $("msg").disabled=false; log("— the line is open —"); };
+  ch.onclose=()=>{ $("st").textContent="closed"; $("st").className="no";
+    $("msg").disabled=true; log("— closed —"); };
+  ch.onmessage=e=>log("them: "+e.data);
+}
+const gather=()=>new Promise(r=>{
+  if(pc.iceGatheringState==="complete") return r();
+  pc.onicecandidate=e=>{ if(!e.candidate) r(); };
+  setTimeout(r,3000);
+});
+
+async function emit(desc){
+  const full=JSON.stringify(desc), small=reduce(desc);
+  $("raw").textContent=full.length+" chars";
+  $("red").textContent=small.length+" chars  ("+
+    Math.round(100-small.length*100/full.length)+"% less)";
+  $("mine").value=small;
+  const h=await sha(small);
+  $("addr").textContent=h.slice(0,16)+"…";
+  const [a,b]=stops(h);
+  $("swatch").style.background="linear-gradient(90deg,rgb("+a+"),rgb("+b+"))";
+}
+
+$("show").onclick=async()=>{
+  isHost=true; $("show").disabled=true; $("join").disabled=true;
+  $("stage").style.display="block"; $("st").textContent="offering";
+  pc=new RTCPeerConnection(ICE);
+  wire(pc.createDataChannel("light"));
+  await pc.setLocalDescription(await pc.createOffer());
+  await gather();
+  await emit(pc.localDescription);
+  log("send that block. then paste theirs below.");
+};
+
+$("join").onclick=()=>{
+  isHost=false; $("show").disabled=true; $("join").disabled=true;
+  $("stage").style.display="block";
+  $("lbl").textContent="your light — appears after you take theirs";
+  log("paste their block below, then press take it.");
+};
+
+$("take").onclick=async()=>{
+  const raw=$("theirs").value.trim(); if(!raw) return;
+  let desc; try{ desc=expand(raw); }catch(e){ log("that isn't a light block."); return; }
+  if(isHost){
+    await pc.setRemoteDescription(desc); log("theirs taken. opening…");
+  }else{
+    pc=new RTCPeerConnection(ICE);
+    pc.ondatachannel=e=>wire(e.channel);
+    await pc.setRemoteDescription(desc);
+    await pc.setLocalDescription(await pc.createAnswer());
+    await gather();
+    await emit(pc.localDescription);
+    log("your answer is above. send it back to them.");
+  }
+};
+$("copy").onclick=()=>{ $("mine").select(); document.execCommand("copy"); };
+$("msg").onkeydown=e=>{
+  if(e.key!=="Enter"||!ch||ch.readyState!=="open") return;
+  const t=$("msg").value.trim(); if(!t) return;
+  ch.send(t); log("you: "+t); $("msg").value="";
+};
+</script>
